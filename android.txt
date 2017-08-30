@@ -1,0 +1,48 @@
+
+cmake -DANDROID_DEPRECATED_HEADERS=ON -DANDROID_ABI=armeabi-v7a -DANDROID_NDK=/usr/build/android-ndk-r15c -DCMAKE_TOOLCHAIN_FILE=/usr/build/android-ndk-r15c/build/cmake/android.toolchain.cmake -DANDROID_NATIVE_API_LEVEL=23 -DCMAKE_BUILD_TYPE=release ../..
+cmake -DSTATIC=ON -DPOCO_STATIC=ON -DWITH_STATIC_RUNTIME=ON -DANDROID_DEPRECATED_HEADERS=ON -DANDROID_ABI=armeabi-v7a -DANDROID_NDK=/usr/build/android-ndk-r15c -DCMAKE_TOOLCHAIN_FILE=/usr/build/android-ndk-r15c/build/cmake/android.toolchain.cmake -DANDROID_NATIVE_API_LEVEL=23 -DCMAKE_BUILD_TYPE=release ../..
+
+LD_LIBRARY_PATH=$(pwd):$LD_LIBRARY_PATH
+
+adb shell getprop ro.build.version.sdk
+adb shell getprop ro.build.version.release
+
+adb connect 192.168.53.54
+adb shell
+su root
+
+am start -n com.example.aar/.MainActivity
+mount -o remount /
+mkdir /tmp && mount -t tmpfs -o size=32M,mode=0755 tmpfs /tmp
+
+docker run -e "EMULATOR=android-23" -e "ARCH=armeabi-v7a" -d -P --name android tracer0tong/android-emulator                                                                                                                                                                             droid tracer0tong/android-emulator
+
+6.0.1
+
+23 
+
+adb push src dest
+
+
+files=`ls` && for f in $files; do adb push $f zconnect; done
+
+
+docker run --rm -it \
+--name=test-android \
+-v $(pwd)/build_temp/android/:/tmp/lib \
+-v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro \
+-u $( id -u $USER ):$( id -g $USER ) \
+asap/boost-android:latest \
+bash 
+
+-c \"./b2  --stagedir=/tmp/lib cxxflags=-fPIC ${boost_libs[@]} target-os=android link=shared threading=multi runtime-link=shared stage
+
+./b2  --stagedir=/tmp/lib cxxflags=-fPIC \
+--with-system \
+--with-date_time \
+--with-regex \
+--with-log \
+--with-atomic \
+--with-program_options \
+--with-timer \
+target-os=android link=static threading=multi runtime-link=static stage
